@@ -3,13 +3,14 @@
            https://api.github.com/users/<your name>
 */
 
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
 
    Skip to Step 3.
 */
-
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -24,7 +25,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,3 +54,52 @@ const followersArray = [];
   luishrd
   bigknell
 */
+const cards = document.querySelector('.cards');
+const followersArray = [];
+
+
+function cardCreator(data) {
+    //variables
+    const card = document.createElement('div'),
+        img = document.createElement('img'),
+        cinfo = document.createElement('div'),
+        name = document.createElement('h2'),
+        userName = document.createElement('h3'),
+        profileUrl = document.createElement('button');
+
+
+
+    function appendToCard(name) {
+        card.append(name);
+    };
+
+    function appendToCinfo(name) {
+        cinfo.append(name);
+    }
+
+
+    // Appends
+
+    profileUrl.addEventListener('click', e => {
+        window.open(data.data.html_url);
+    });
+
+    name.textContent = 'Isaac Rutledge';
+    profileUrl.textContent = 'GitHub';
+    img.setAttribute('src', data.data.avatar_url);
+    userName.textContent = data.data.login;
+    appendToCinfo(name);
+    appendToCard(img);
+    appendToCinfo(profileUrl);
+    appendToCard(cinfo);
+    appendToCinfo(userName);
+    return card
+}
+
+axios.get('https://api.github.com/users/rutrut6969')
+    .then(response => {
+        console.log(response.data.avatar_url);
+        cards.append(cardCreator(response));
+
+    })
+    .catch(err => console.log('Error1'));
